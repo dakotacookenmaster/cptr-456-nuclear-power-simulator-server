@@ -5,5 +5,5 @@ import { AppService } from './app.service'
 @ApiTags('Application Root')
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+    constructor(private readonly appService: AppService) {}
 }

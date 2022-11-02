@@ -1,4 +1,4 @@
 export class User {
-  name: string
-  key: string
+    name: string
+    key: string
 }
