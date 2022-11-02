@@ -16,7 +16,6 @@ export class ReactorsService {
     constructor() {
         setInterval(() => {
             this.userNuclearPlants.forEach((value) => {
-                console.log(JSON.stringify(value, null, 4))
                 value.reactors.forEach((reactor) => reactor.tick())
             })
         }, 2500)

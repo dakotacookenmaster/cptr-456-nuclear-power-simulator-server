@@ -22,9 +22,9 @@ export class ReactorsController {
 
     @ApiQuery({
         required: true,
-        name: "apiKey",
-        type: "string",
-        description: "The API key provided to you to access your power plant."
+        name: 'apiKey',
+        type: 'string',
+        description: 'The API key provided to you to access your power plant.',
     })
     @Get()
     findAll(@Req() request: any) {
@@ -33,15 +33,15 @@ export class ReactorsController {
 
     @ApiQuery({
         required: true,
-        name: "apiKey",
-        type: "string",
-        description: "The API key provided to you to access your power plant."
+        name: 'apiKey',
+        type: 'string',
+        description: 'The API key provided to you to access your power plant.',
     })
     @ApiParam({
         required: true,
-        name: "id",
-        type: "string",
-        description: "The ID of the reactor you wish to access."
+        name: 'id',
+        type: 'string',
+        description: 'The ID of the reactor you wish to access.',
     })
     @Get('temperature/:id')
     findTemperatureOfOne(@Req() request: any, @Param('id') id: string) {
@@ -60,15 +60,15 @@ export class ReactorsController {
 
     @ApiQuery({
         required: true,
-        name: "apiKey",
-        type: "string",
-        description: "The API key provided to you to access your power plant."
+        name: 'apiKey',
+        type: 'string',
+        description: 'The API key provided to you to access your power plant.',
     })
     @ApiParam({
         required: true,
-        name: "id",
-        type: "string",
-        description: "The ID of the reactor you wish to access."
+        name: 'id',
+        type: 'string',
+        description: 'The ID of the reactor you wish to access.',
     })
     @Get('coolant/:id')
     findCoolantOfOne(@Req() request: any, @Param('id') id: string) {
@@ -85,15 +85,15 @@ export class ReactorsController {
 
     @ApiQuery({
         required: true,
-        name: "apiKey",
-        type: "string",
-        description: "The API key provided to you to access your power plant."
+        name: 'apiKey',
+        type: 'string',
+        description: 'The API key provided to you to access your power plant.',
     })
     @ApiParam({
         required: true,
-        name: "id",
-        type: "string",
-        description: "The ID of the reactor you wish to access."
+        name: 'id',
+        type: 'string',
+        description: 'The ID of the reactor you wish to access.',
     })
     @Get('output/:id')
     findOutputOfOne(@Req() request: any, @Param('id') id: string) {
@@ -110,9 +110,9 @@ export class ReactorsController {
 
     @ApiQuery({
         required: true,
-        name: "apiKey",
-        type: "string",
-        description: "The API key provided to you to access your power plant."
+        name: 'apiKey',
+        type: 'string',
+        description: 'The API key provided to you to access your power plant.',
     })
     @Post('temperature')
     setTemperatureUnit(
@@ -124,9 +124,9 @@ export class ReactorsController {
 
     @ApiQuery({
         required: true,
-        name: "apiKey",
-        type: "string",
-        description: "The API key provided to you to access your power plant."
+        name: 'apiKey',
+        type: 'string',
+        description: 'The API key provided to you to access your power plant.',
     })
     @Get('logs')
     getLogs(@Req() request: any) {
@@ -135,15 +135,15 @@ export class ReactorsController {
 
     @ApiQuery({
         required: true,
-        name: "apiKey",
-        type: "string",
-        description: "The API key provided to you to access your power plant."
+        name: 'apiKey',
+        type: 'string',
+        description: 'The API key provided to you to access your power plant.',
     })
     @ApiParam({
         required: true,
-        name: "id",
-        type: "string",
-        description: "The ID of the reactor you wish to access."
+        name: 'id',
+        type: 'string',
+        description: 'The ID of the reactor you wish to access.',
     })
     @Get('fuel-level/:id')
     getReactorFuelLevels(@Req() request: any, @Param('id') id: string) {
@@ -152,15 +152,15 @@ export class ReactorsController {
 
     @ApiQuery({
         required: true,
-        name: "apiKey",
-        type: "string",
-        description: "The API key provided to you to access your power plant."
+        name: 'apiKey',
+        type: 'string',
+        description: 'The API key provided to you to access your power plant.',
     })
     @ApiParam({
         required: true,
-        name: "id",
-        type: "string",
-        description: "The ID of the reactor you wish to access."
+        name: 'id',
+        type: 'string',
+        description: 'The ID of the reactor you wish to access.',
     })
     @Get('reactor-state/:id')
     getReactorState(@Req() request: any, @Param('id') id: string) {
@@ -177,15 +177,15 @@ export class ReactorsController {
 
     @ApiQuery({
         required: true,
-        name: "apiKey",
-        type: "string",
-        description: "The API key provided to you to access your power plant."
+        name: 'apiKey',
+        type: 'string',
+        description: 'The API key provided to you to access your power plant.',
     })
     @ApiParam({
         required: true,
-        name: "id",
-        type: "string",
-        description: "The ID of the reactor you wish to access."
+        name: 'id',
+        type: 'string',
+        description: 'The ID of the reactor you wish to access.',
     })
     @Get('rod-state/:id')
     getRodState(@Req() request: any, @Param('id') id: string) {
@@ -194,15 +194,15 @@ export class ReactorsController {
 
     @ApiQuery({
         required: true,
-        name: "apiKey",
-        type: "string",
-        description: "The API key provided to you to access your power plant."
+        name: 'apiKey',
+        type: 'string',
+        description: 'The API key provided to you to access your power plant.',
     })
     @ApiParam({
         required: true,
-        name: "id",
-        type: "string",
-        description: "The ID of the reactor you wish to access."
+        name: 'id',
+        type: 'string',
+        description: 'The ID of the reactor you wish to access.',
     })
     @Post('set-reactor-name/:id')
     setName(
@@ -215,15 +215,15 @@ export class ReactorsController {
 
     @ApiQuery({
         required: true,
-        name: "apiKey",
-        type: "string",
-        description: "The API key provided to you to access your power plant."
+        name: 'apiKey',
+        type: 'string',
+        description: 'The API key provided to you to access your power plant.',
     })
     @ApiParam({
         required: true,
-        name: "id",
-        type: "string",
-        description: "The ID of the reactor you wish to access."
+        name: 'id',
+        type: 'string',
+        description: 'The ID of the reactor you wish to access.',
     })
     @Post('drop-rod/:id')
     dropControlRod(@Req() request: any, @Param('id') id: string) {
@@ -232,15 +232,15 @@ export class ReactorsController {
 
     @ApiQuery({
         required: true,
-        name: "apiKey",
-        type: "string",
-        description: "The API key provided to you to access your power plant."
+        name: 'apiKey',
+        type: 'string',
+        description: 'The API key provided to you to access your power plant.',
     })
     @ApiParam({
         required: true,
-        name: "id",
-        type: "string",
-        description: "The ID of the reactor you wish to access."
+        name: 'id',
+        type: 'string',
+        description: 'The ID of the reactor you wish to access.',
     })
     @Post('emergency-shutdown/:id')
     emergencyShutdown(@Req() request: any, @Param('id') id: string) {
@@ -249,15 +249,15 @@ export class ReactorsController {
 
     @ApiQuery({
         required: true,
-        name: "apiKey",
-        type: "string",
-        description: "The API key provided to you to access your power plant."
+        name: 'apiKey',
+        type: 'string',
+        description: 'The API key provided to you to access your power plant.',
     })
     @ApiParam({
         required: true,
-        name: "id",
-        type: "string",
-        description: "The ID of the reactor you wish to access."
+        name: 'id',
+        type: 'string',
+        description: 'The ID of the reactor you wish to access.',
     })
     @Post('controlled-shutdown/:id')
     controlledShutdown(@Req() request: any, @Param('id') id: string) {
@@ -266,15 +266,15 @@ export class ReactorsController {
 
     @ApiQuery({
         required: true,
-        name: "apiKey",
-        type: "string",
-        description: "The API key provided to you to access your power plant."
+        name: 'apiKey',
+        type: 'string',
+        description: 'The API key provided to you to access your power plant.',
     })
     @ApiParam({
         required: true,
-        name: "id",
-        type: "string",
-        description: "The ID of the reactor you wish to access."
+        name: 'id',
+        type: 'string',
+        description: 'The ID of the reactor you wish to access.',
     })
     @Post('maintenance/:id')
     enableMainteanceMode(@Req() request: any, @Param('id') id: string) {
@@ -283,15 +283,15 @@ export class ReactorsController {
 
     @ApiQuery({
         required: true,
-        name: "apiKey",
-        type: "string",
-        description: "The API key provided to you to access your power plant."
+        name: 'apiKey',
+        type: 'string',
+        description: 'The API key provided to you to access your power plant.',
     })
     @ApiParam({
         required: true,
-        name: "id",
-        type: "string",
-        description: "The ID of the reactor you wish to access."
+        name: 'id',
+        type: 'string',
+        description: 'The ID of the reactor you wish to access.',
     })
     @Post('refuel/:id')
     refuel(@Req() request: any, @Param('id') id: string) {
@@ -304,9 +304,9 @@ export class ReactorsController {
 
     @ApiQuery({
         required: true,
-        name: "apiKey",
-        type: "string",
-        description: "The API key provided to you to access your power plant."
+        name: 'apiKey',
+        type: 'string',
+        description: 'The API key provided to you to access your power plant.',
     })
     @Post('reset')
     reset(@Req() request: any) {
@@ -315,15 +315,15 @@ export class ReactorsController {
 
     @ApiQuery({
         required: true,
-        name: "apiKey",
-        type: "string",
-        description: "The API key provided to you to access your power plant."
+        name: 'apiKey',
+        type: 'string',
+        description: 'The API key provided to you to access your power plant.',
     })
     @ApiParam({
         required: true,
-        name: "id",
-        type: "string",
-        description: "The ID of the reactor you wish to access."
+        name: 'id',
+        type: 'string',
+        description: 'The ID of the reactor you wish to access.',
     })
     @Post('start-reactor/:id')
     startReactor(@Req() request: any, @Param('id') id: string) {
@@ -338,15 +338,15 @@ export class ReactorsController {
 
     @ApiQuery({
         required: true,
-        name: "apiKey",
-        type: "string",
-        description: "The API key provided to you to access your power plant."
+        name: 'apiKey',
+        type: 'string',
+        description: 'The API key provided to you to access your power plant.',
     })
     @ApiParam({
         required: true,
-        name: "id",
-        type: "string",
-        description: "The ID of the reactor you wish to access."
+        name: 'id',
+        type: 'string',
+        description: 'The ID of the reactor you wish to access.',
     })
     @Post('coolant/:id')
     setCoolantState(
@@ -359,9 +359,9 @@ export class ReactorsController {
 
     @ApiQuery({
         required: true,
-        name: "apiKey",
-        type: "string",
-        description: "The API key provided to you to access your power plant."
+        name: 'apiKey',
+        type: 'string',
+        description: 'The API key provided to you to access your power plant.',
     })
     @Post('plant-name')
     setPlantName(@Req() request: any, @Body() body: UpdatePlantName) {
