@@ -8,7 +8,7 @@ import {
     Body,
     BadRequestException,
 } from '@nestjs/common'
-import { ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger'
+import { ApiBadRequestResponse, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger'
 import { UpdatePlantName } from './dto/update-plant-name.dto'
 import { UpdateReactorCoolant } from './dto/update-reactor-coolant.dto'
 import { UpdateReactorNameDto } from './dto/update-reactor-name.dto'
@@ -347,6 +347,9 @@ export class ReactorsController {
         name: 'id',
         type: 'string',
         description: 'The ID of the reactor you wish to access.',
+    })
+    @ApiBadRequestResponse({
+        description: "This is returned when the request doesn't contain the necessary information to update the Reactor's coolant state."
     })
     @Post('coolant/:id')
     setCoolantState(
