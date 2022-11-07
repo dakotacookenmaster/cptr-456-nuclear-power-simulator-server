@@ -1,6 +1,7 @@
 import { State } from '../interfaces/state.interface'
 import { v4 as uuid } from 'uuid'
 import { TempLevel } from '../interfaces/temp-level.interface'
+import { GlobalData } from '../dto/global-data.dto'
 
 export class Reactor {
     id: string
@@ -154,7 +155,7 @@ export class Reactor {
         }
     }
 
-    getGlobalData() {
+    getGlobalData(): GlobalData {
         return {
             id: this.id,
             name: this.name,

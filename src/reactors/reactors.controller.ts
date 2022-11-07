@@ -8,7 +8,9 @@ import {
     Body,
     BadRequestException,
 } from '@nestjs/common'
-import { ApiBadRequestResponse, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger'
+import { ApiBadRequestResponse, ApiCreatedResponse, ApiOkResponse, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger'
+import { GlobalData } from './dto/global-data.dto'
+import { PlantData } from './dto/plant-data.dto'
 import { UpdatePlantName } from './dto/update-plant-name.dto'
 import { UpdateReactorCoolant } from './dto/update-reactor-coolant.dto'
 import { UpdateReactorNameDto } from './dto/update-reactor-name.dto'
@@ -26,8 +28,12 @@ export class ReactorsController {
         type: 'string',
         description: 'The API key provided to you to access your power plant.',
     })
+    @ApiOkResponse({
+        type: PlantData,
+        description: "Returns some generic data about the power plant."
+    })
     @Get()
-    findAll(@Req() request: any) {
+    findAll(@Req() request: any): PlantData {
         return this.reactorsService.findAll(request.user.key)
     }
 
@@ -365,6 +371,12 @@ export class ReactorsController {
         name: 'apiKey',
         type: 'string',
         description: 'The API key provided to you to access your power plant.',
+    })
+    @ApiBadRequestResponse({
+        description: "This is returned when the request doesn't contain the necessary information to update the simulator's Nuclear Plant name."
+    })
+    @ApiCreatedResponse({
+        description: "This is returned when the request was handled successfully."
     })
     @Post('plant-name')
     setPlantName(@Req() request: any, @Body() body: UpdatePlantName) {
