@@ -15,6 +15,12 @@ async function bootstrap() {
         .setDescription(
             'A RESTful API designed to support virtual nuclear power plants.',
         )
+        .addBearerAuth({
+            type: "apiKey",
+            name: "apiKey",
+            in: "query",
+            description: "The API key provided to you to access your power plant."
+        })
         .setVersion('0.0.1')
         .build()
 

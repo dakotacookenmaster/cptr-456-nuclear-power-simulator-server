@@ -8,7 +8,7 @@ import {
     Body,
     BadRequestException,
 } from '@nestjs/common'
-import { ApiBadRequestResponse, ApiCreatedResponse, ApiOkResponse, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger'
+import { ApiBadRequestResponse, ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiParam, ApiQuery, ApiSecurity, ApiTags } from '@nestjs/swagger'
 import { GlobalData } from './dto/global-data.dto'
 import { PlantData } from './dto/plant-data.dto'
 import { UpdatePlantName } from './dto/update-plant-name.dto'
@@ -18,16 +18,11 @@ import { UpdateReactorTemperatureUnitDto } from './dto/update-reactor-temperatur
 import { ReactorsService } from './reactors.service'
 
 @ApiTags('Reactors')
+@ApiBearerAuth()
 @Controller('reactors')
 export class ReactorsController {
     constructor(private readonly reactorsService: ReactorsService) {}
 
-    @ApiQuery({
-        required: true,
-        name: 'apiKey',
-        type: 'string',
-        description: 'The API key provided to you to access your power plant.',
-    })
     @ApiOkResponse({
         type: PlantData,
         description: "Returns some generic data about the power plant."
@@ -37,12 +32,6 @@ export class ReactorsController {
         return this.reactorsService.findAll(request.user.key)
     }
 
-    @ApiQuery({
-        required: true,
-        name: 'apiKey',
-        type: 'string',
-        description: 'The API key provided to you to access your power plant.',
-    })
     @ApiParam({
         required: true,
         name: 'id',
@@ -64,12 +53,6 @@ export class ReactorsController {
         }
     }
 
-    @ApiQuery({
-        required: true,
-        name: 'apiKey',
-        type: 'string',
-        description: 'The API key provided to you to access your power plant.',
-    })
     @ApiParam({
         required: true,
         name: 'id',
@@ -89,12 +72,6 @@ export class ReactorsController {
         }
     }
 
-    @ApiQuery({
-        required: true,
-        name: 'apiKey',
-        type: 'string',
-        description: 'The API key provided to you to access your power plant.',
-    })
     @ApiParam({
         required: true,
         name: 'id',
@@ -114,12 +91,6 @@ export class ReactorsController {
         }
     }
 
-    @ApiQuery({
-        required: true,
-        name: 'apiKey',
-        type: 'string',
-        description: 'The API key provided to you to access your power plant.',
-    })
     @Post('temperature')
     setTemperatureUnit(
         @Req() request: any,
@@ -128,23 +99,11 @@ export class ReactorsController {
         this.reactorsService.changeTemperatureUnit(request.user.key, body.unit)
     }
 
-    @ApiQuery({
-        required: true,
-        name: 'apiKey',
-        type: 'string',
-        description: 'The API key provided to you to access your power plant.',
-    })
     @Get('logs')
     getLogs(@Req() request: any) {
         return this.reactorsService.getLogs(request.user.key)
     }
 
-    @ApiQuery({
-        required: true,
-        name: 'apiKey',
-        type: 'string',
-        description: 'The API key provided to you to access your power plant.',
-    })
     @ApiParam({
         required: true,
         name: 'id',
@@ -156,12 +115,6 @@ export class ReactorsController {
         return this.reactorsService.getReactorFuelLevels(request.user.key, id)
     }
 
-    @ApiQuery({
-        required: true,
-        name: 'apiKey',
-        type: 'string',
-        description: 'The API key provided to you to access your power plant.',
-    })
     @ApiParam({
         required: true,
         name: 'id',
@@ -181,12 +134,6 @@ export class ReactorsController {
         }
     }
 
-    @ApiQuery({
-        required: true,
-        name: 'apiKey',
-        type: 'string',
-        description: 'The API key provided to you to access your power plant.',
-    })
     @ApiParam({
         required: true,
         name: 'id',
@@ -198,12 +145,6 @@ export class ReactorsController {
         return this.reactorsService.getRodState(request.user.key, id)
     }
 
-    @ApiQuery({
-        required: true,
-        name: 'apiKey',
-        type: 'string',
-        description: 'The API key provided to you to access your power plant.',
-    })
     @ApiParam({
         required: true,
         name: 'id',
@@ -219,12 +160,6 @@ export class ReactorsController {
         this.reactorsService.setReactorName(request.user.key, id, body.name)
     }
 
-    @ApiQuery({
-        required: true,
-        name: 'apiKey',
-        type: 'string',
-        description: 'The API key provided to you to access your power plant.',
-    })
     @ApiParam({
         required: true,
         name: 'id',
@@ -236,12 +171,6 @@ export class ReactorsController {
         this.reactorsService.dropControlRod(request.user.key, id)
     }
 
-    @ApiQuery({
-        required: true,
-        name: 'apiKey',
-        type: 'string',
-        description: 'The API key provided to you to access your power plant.',
-    })
     @ApiParam({
         required: true,
         name: 'id',
@@ -253,12 +182,6 @@ export class ReactorsController {
         this.reactorsService.emergencyShutdown(request.user.key, id)
     }
 
-    @ApiQuery({
-        required: true,
-        name: 'apiKey',
-        type: 'string',
-        description: 'The API key provided to you to access your power plant.',
-    })
     @ApiParam({
         required: true,
         name: 'id',
@@ -270,12 +193,6 @@ export class ReactorsController {
         this.reactorsService.controlledShutdown(request.user.key, id)
     }
 
-    @ApiQuery({
-        required: true,
-        name: 'apiKey',
-        type: 'string',
-        description: 'The API key provided to you to access your power plant.',
-    })
     @ApiParam({
         required: true,
         name: 'id',
@@ -287,12 +204,6 @@ export class ReactorsController {
         this.reactorsService.enableMaintenanceMode(request.user.key, id)
     }
 
-    @ApiQuery({
-        required: true,
-        name: 'apiKey',
-        type: 'string',
-        description: 'The API key provided to you to access your power plant.',
-    })
     @ApiParam({
         required: true,
         name: 'id',
@@ -308,23 +219,11 @@ export class ReactorsController {
         }
     }
 
-    @ApiQuery({
-        required: true,
-        name: 'apiKey',
-        type: 'string',
-        description: 'The API key provided to you to access your power plant.',
-    })
     @Post('reset')
     reset(@Req() request: any) {
         this.reactorsService.reset(request.user.key)
     }
 
-    @ApiQuery({
-        required: true,
-        name: 'apiKey',
-        type: 'string',
-        description: 'The API key provided to you to access your power plant.',
-    })
     @ApiParam({
         required: true,
         name: 'id',
@@ -342,12 +241,6 @@ export class ReactorsController {
         }
     }
 
-    @ApiQuery({
-        required: true,
-        name: 'apiKey',
-        type: 'string',
-        description: 'The API key provided to you to access your power plant.',
-    })
     @ApiParam({
         required: true,
         name: 'id',
@@ -366,12 +259,6 @@ export class ReactorsController {
         this.reactorsService.setCoolantState(request.user.key, id, body.coolant)
     }
 
-    @ApiQuery({
-        required: true,
-        name: 'apiKey',
-        type: 'string',
-        description: 'The API key provided to you to access your power plant.',
-    })
     @ApiBadRequestResponse({
         description: "This is returned when the request doesn't contain the necessary information to update the simulator's Nuclear Plant name."
     })
