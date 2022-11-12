@@ -171,6 +171,14 @@ export class ReactorsService {
             ?.dropControlRods(1)
     }
 
+    raiseControlRod(key: string, id: string) {
+        this.addIfVoid(key)
+        return this.userNuclearPlants
+            .get(key)
+            ?.reactors.find((item) => item.id === id)
+            ?.raiseControlRods(1)
+    }
+
     setPlantName(key: string, name: string) {
         this.addIfVoid(key)
         const userNuclearPlant = this.userNuclearPlants.get(key)

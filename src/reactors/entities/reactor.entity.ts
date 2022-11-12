@@ -133,6 +133,19 @@ export class Reactor {
         }
     }
 
+    raiseControlRods(amount: number) {
+        if (this.control_rods.in - amount >= 0) {
+            this.control_rods.in -= amount
+            this.control_rods.out += amount
+
+            this.addLog(
+                `${amount} control rods were raised. ${
+                    (this.control_rods.in / 300) * 100
+                }% of the control rods are now lowered.`,
+            )
+        }
+    }
+
     dropControlRods(amount: number) {
         if (this.control_rods.in + amount <= 300) {
             this.control_rods.in += amount

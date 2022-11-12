@@ -16,10 +16,11 @@ async function bootstrap() {
             'A RESTful API designed to support virtual nuclear power plants.',
         )
         .addBearerAuth({
-            type: "apiKey",
-            name: "apiKey",
-            in: "query",
-            description: "The API key provided to you to access your power plant."
+            type: 'apiKey',
+            name: 'apiKey',
+            in: 'query',
+            description:
+                'The API key provided to you to access your power plant.',
         })
         .setVersion('0.0.1')
         .build()
@@ -29,7 +30,7 @@ async function bootstrap() {
 
     const SERVER_PORT = process.env.SERVER_PORT ?? 3000
 
-    app.useGlobalPipes(new ValidationPipe());
+    app.useGlobalPipes(new ValidationPipe())
 
     await app.listen(SERVER_PORT)
 
