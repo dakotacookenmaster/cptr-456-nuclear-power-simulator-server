@@ -22,7 +22,7 @@ async function bootstrap() {
             description:
                 'The API key provided to you to access your power plant.',
         })
-        .setVersion('0.0.1')
+        .setVersion('1.0.0')
         .build()
 
     const document = SwaggerModule.createDocument(app, config)
