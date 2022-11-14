@@ -1,6 +1,6 @@
 import { BadRequestException } from '@nestjs/common'
 import { NextFunction } from 'express'
-import users from '../private-data/keys.json'
+import users from './keys.json'
 
 export function apiCheck(request: any, _: Response, next: NextFunction) {
     const apiKey: string = request.query.apiKey
