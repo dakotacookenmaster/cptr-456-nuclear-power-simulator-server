@@ -141,7 +141,7 @@ export class ReactorsController {
 
     @ApiOperation({
         summary:
-            'This method allows you to change the temperature unit for a particular reactor.',
+            'This method allows you to change the temperature unit your reactors.',
     })
     @ApiCreatedResponse({
         description: 'This is returned when the request was successful.',
