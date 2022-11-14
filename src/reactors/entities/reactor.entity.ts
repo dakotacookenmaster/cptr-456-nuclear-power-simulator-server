@@ -2,6 +2,7 @@ import { State } from '../interfaces/state.interface'
 import { v4 as uuid } from 'uuid'
 import { TempLevel } from '../interfaces/temp-level.interface'
 import { GlobalData } from '../dto/global-data.dto'
+import { Logger } from '@nestjs/common/services'
 
 export class Reactor {
     id: string
@@ -78,19 +79,19 @@ export class Reactor {
                 this.fuel.percentage -= randomFuelDrop
             } else {
                 this.fuel.percentage = 0
-                this.state = State.MAINTENANCE
+                this.state = State.OFFLINE
                 this.addLog('Reactor shut down due to lack of fuel.')
             }
             // Handle Temperature Changes
             if (this.coolant === 'on') {
                 if (this.temperature.unit === 'celsius') {
                     this.temperature.amount =
-                        this.control_rods.out * 3.98 * 0.616 +
+                        22.22222 + this.control_rods.out * 2.45168 +
                         Math.random() * 10
                 } else {
                     this.temperature.amount =
-                        this.control_rods.out * 3.98 * 0.7392 +
-                        Math.random() * 12
+                        72 + this.control_rods.out * 2.45168 * 1.8 +
+                        Math.random() * 10 * 1.8
                 }
             } else {
                 this.temperature.amount += Math.random() * 20
@@ -222,6 +223,7 @@ export class Reactor {
                 this.temperature.amount = this.convertToFahrenheit(
                     this.temperature.amount,
                 )
+                console.log("AFTER:", this.temperature.amount)
                 this.MAX_SAFE_TEMP = this.convertToFahrenheit(
                     this.MAX_SAFE_TEMP,
                 )
@@ -283,8 +285,11 @@ export class Reactor {
             return 'You cannot start a reactor that is already active.'
         } else if (this.state === State.EMERGENCY_SHUTDOWN) {
             return 'You cannot restart a reactor that went through an Emergency shutdown.'
+        } else if (this.fuel.percentage === 0) {
+            return 'You cannot restart a reactor that has no fuel.'
         } else {
             this.addLog('Reactor (re)started.')
+            this.state = State.ACTIVE
             return false
         }
     }
