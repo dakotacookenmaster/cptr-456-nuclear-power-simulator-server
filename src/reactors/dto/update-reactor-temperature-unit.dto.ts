@@ -7,7 +7,7 @@ export class UpdateReactorTemperatureUnitDto {
     @IsNotEmpty()
     @ApiProperty({
         name: 'unit',
-        type: 'string',
+        enum: ["fahrenheit", "celsius"],
         description:
             "The temperature unit you want to display your reactors in. Must be one of 'fahrenheit' or 'celsius'.",
         examples: ['celsius', 'fahrenheit'],

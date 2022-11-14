@@ -19,8 +19,14 @@ import {
     ApiParam,
     ApiTags,
 } from '@nestjs/swagger'
+import { CoolantDataDto } from './dto/coolant-data.dto'
+import { FuelDto } from './dto/fuel.dto'
+import { LogsDto } from './dto/logs.dto'
+import { OutputDto } from './dto/output.dto'
 import { PlantData } from './dto/plant-data.dto'
+import { ReactorStateDto } from './dto/reactor-state.dto'
 import { RodData } from './dto/rod-data.dto'
+import { TemperatureDto } from './dto/temperature.dto'
 import { UpdatePlantName } from './dto/update-plant-name.dto'
 import { UpdateReactorCoolant } from './dto/update-reactor-coolant.dto'
 import { UpdateReactorNameDto } from './dto/update-reactor-name.dto'
@@ -57,6 +63,7 @@ export class ReactorsController {
         description: 'The ID of the reactor you wish to access.',
     })
     @ApiOkResponse({
+        type: TemperatureDto,
         description: 'This is returned when the request was successful.',
     })
     @ApiNotFoundResponse({
@@ -89,6 +96,7 @@ export class ReactorsController {
         description: 'The ID of the reactor you wish to access.',
     })
     @ApiOkResponse({
+        type: CoolantDataDto,
         description: 'This is returned when the request was successful.',
     })
     @Get('coolant/:id')
@@ -115,6 +123,7 @@ export class ReactorsController {
         description: 'The ID of the reactor you wish to access.',
     })
     @ApiOkResponse({
+        type: OutputDto,
         description: 'This is returned when the request was successful.',
     })
     @Get('output/:id')
@@ -150,7 +159,8 @@ export class ReactorsController {
             'This method allows you to get the logs for all of your reactors.',
     })
     @ApiOkResponse({
-        description: 'This is returned when the request was successful.',
+        type: LogsDto,
+        description: 'This is returned when the request was successful. It is important to note here that dynamic_id refers to a real reactor id.',
     })
     @Get('logs')
     getLogs(@Req() request: any) {
@@ -168,6 +178,7 @@ export class ReactorsController {
         description: 'The ID of the reactor you wish to access.',
     })
     @ApiOkResponse({
+        type: FuelDto,
         description: 'This is returned when the request was successful.',
     })
     @Get('fuel-level/:id')
@@ -186,6 +197,7 @@ export class ReactorsController {
         description: 'The ID of the reactor you wish to access.',
     })
     @ApiOkResponse({
+        type: ReactorStateDto,
         description: 'This is returned when the request was successful.',
     })
     @Get('reactor-state/:id')
