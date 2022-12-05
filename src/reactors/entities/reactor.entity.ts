@@ -93,41 +93,48 @@ export class Reactor {
                 this.state = State.OFFLINE
                 this.addLog('Reactor shut down due to lack of fuel.')
             }
-            // Handle Temperature Changes
-            if (this.coolant === 'on') {
-                if (this.temperature.unit === 'celsius') {
-                    this.temperature.amount =
-                        22.22222 +
-                        this.control_rods.out * 2.45168 +
-                        Math.random() * 10
-                } else {
-                    this.temperature.amount =
-                        72 +
-                        this.control_rods.out * 2.45168 * 1.8 +
-                        Math.random() * 10 * 1.8
-                }
-            } else {
-                this.temperature.amount += Math.random() * 20
-            }
+        }
 
-            // Handle Temperature Level Changes
-            if (this.temperature.amount <= this.MAX_SAFE_TEMP) {
-                this.temperature.status = TempLevel.SAFE
-            } else if (this.temperature.amount <= this.CAUTION_TEMP) {
-                this.temperature.status = TempLevel.CAUTION
-            } else if (this.temperature.amount <= this.DANGER_TEMP) {
-                this.temperature.status = TempLevel.DANGER
-            } else if (this.temperature.amount <= this.MELTDOWN_TEMP + 50) {
-                this.temperature.status = TempLevel.MELTDOWN
+        // Handle Temperature Changes
+        if (this.coolant === 'on' && this.state === State.ACTIVE) {
+            if (this.temperature.unit === 'celsius') {
+                this.temperature.amount =
+                    22.22222 +
+                    this.control_rods.out * 2.45168 +
+                    Math.random() * 10
             } else {
+                this.temperature.amount =
+                    72 +
+                    this.control_rods.out * 2.45168 * 1.8 +
+                    Math.random() * 10 * 1.8
+            }
+        } else if (this.state === State.ACTIVE) {
+            this.temperature.amount += Math.random() * 20
+        }
+
+        // Handle Temperature Level Changes
+        if (this.temperature.amount <= this.MAX_SAFE_TEMP && this.temperature.status !== TempLevel.SAFE) {
+            this.temperature.status = TempLevel.SAFE
+            this.addLog('Reactor returned to safe temperature levels.')
+        } else if (this.temperature.amount <= this.CAUTION_TEMP && this.temperature.status !== TempLevel.CAUTION) {
+            this.temperature.status = TempLevel.CAUTION
+            this.addLog('Reactor exceeding safe temperature level - caution is advised.')
+        } else if (this.temperature.amount <= this.DANGER_TEMP && this.temperature.status !== TempLevel.DANGER) {
+            this.temperature.status = TempLevel.DANGER
+            this.addLog('Reactor critically exceeding safe temperature level - danger.')
+        } else if (this.temperature.amount <= this.MELTDOWN_TEMP + 50 && this.temperature.status !== TempLevel.MELTDOWN) {
+            this.temperature.status = TempLevel.MELTDOWN
+            this.addLog('Reactor has begun meltdown process. Recommending controlled shutdown or emergency shutdown immediately.')
+        } else {
+            if (this.temperature.amount > this.MELTDOWN_TEMP + 50 && this.temperature.status !== TempLevel.MELTDOWN) {
                 this.temperature.status = TempLevel.MELTDOWN
                 this.state = State.EMERGENCY_SHUTDOWN
                 this.addLog('Emergency shutdown mode automatically activated!')
             }
-
-            // Handle Output Changes
-            this.output.amount = this.control_rods.out * 3.98
         }
+
+        // Handle Output Changes
+        this.output.amount = this.control_rods.out * 3.98
     }
 
     raiseControlRods(amount: number) {
@@ -215,7 +222,6 @@ export class Reactor {
                 this.temperature.amount = this.convertToFahrenheit(
                     this.temperature.amount,
                 )
-                console.log('AFTER:', this.temperature.amount)
                 this.MAX_SAFE_TEMP = this.convertToFahrenheit(
                     this.MAX_SAFE_TEMP,
                 )
