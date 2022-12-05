@@ -1,8 +1,8 @@
+/* eslint-disable prettier/prettier */
 import { State } from '../interfaces/state.interface'
 import { v4 as uuid } from 'uuid'
 import { TempLevel } from '../interfaces/temp-level.interface'
 import { GlobalData } from '../dto/global-data.dto'
-import { Logger } from '@nestjs/common/services'
 
 export class Reactor {
     id: string
@@ -72,9 +72,20 @@ export class Reactor {
                 ...this.temperature,
                 amount: this.temperature.unit === 'celsius' ? 22.22222 : 72,
             }
+        } else if (this.state === State.EMERGENCY_SHUTDOWN) {
+            if (this.control_rods.in !== 300) {
+                this.dropControlRods(35)
+            }
+
+            if (this.coolant !== 'on') {
+                this.coolant = 'on'
+                this.addLog(
+                    'Coolant was enabled due to Emergency shutdown mode.',
+                )
+            }
         } else {
             // Handle Fuel Changes
-            const randomFuelDrop = Math.random()
+            const randomFuelDrop = Math.random() / 5
             if (this.fuel.percentage - randomFuelDrop >= 0) {
                 this.fuel.percentage -= randomFuelDrop
             } else {
@@ -86,11 +97,13 @@ export class Reactor {
             if (this.coolant === 'on') {
                 if (this.temperature.unit === 'celsius') {
                     this.temperature.amount =
-                        22.22222 + this.control_rods.out * 2.45168 +
+                        22.22222 +
+                        this.control_rods.out * 2.45168 +
                         Math.random() * 10
                 } else {
                     this.temperature.amount =
-                        72 + this.control_rods.out * 2.45168 * 1.8 +
+                        72 +
+                        this.control_rods.out * 2.45168 * 1.8 +
                         Math.random() * 10 * 1.8
                 }
             } else {
@@ -108,29 +121,12 @@ export class Reactor {
                 this.temperature.status = TempLevel.MELTDOWN
             } else {
                 this.temperature.status = TempLevel.MELTDOWN
-                if (this.state !== State.EMERGENCY_SHUTDOWN) {
-                    this.state = State.EMERGENCY_SHUTDOWN
-                    this.addLog(
-                        'Emergency shutdown mode automatically activated!',
-                    )
-                }
+                this.state = State.EMERGENCY_SHUTDOWN
+                this.addLog('Emergency shutdown mode automatically activated!')
             }
 
             // Handle Output Changes
             this.output.amount = this.control_rods.out * 3.98
-
-            if (this.state === State.EMERGENCY_SHUTDOWN) {
-                if (this.control_rods.in !== 300) {
-                    this.dropControlRods(35)
-                }
-
-                if (this.coolant !== 'on') {
-                    this.coolant = 'on'
-                    this.addLog(
-                        'Coolant was enabled due to Emergency shutdown mode.',
-                    )
-                }
-            }
         }
     }
 
@@ -140,8 +136,7 @@ export class Reactor {
             this.control_rods.out += amount
 
             this.addLog(
-                `${amount} control rods were raised. ${
-                    (this.control_rods.in / 300) * 100
+                `${amount} control rods were raised. ${(this.control_rods.in / 300) * 100
                 }% of the control rods are now lowered.`,
             )
         }
@@ -152,15 +147,13 @@ export class Reactor {
             this.control_rods.in += amount
             this.control_rods.out -= amount
             this.addLog(
-                `${amount} control rods were lowered. ${
-                    (this.control_rods.in / 300) * 100
+                `${amount} control rods were lowered. ${(this.control_rods.in / 300) * 100
                 }% of the control rods are now lowered.`,
             )
         } else {
             if (this.control_rods.in !== 300) {
                 this.addLog(
-                    `${
-                        300 - this.control_rods.in
+                    `${300 - this.control_rods.in
                     } control rods were lowered. 100% of the control rods are now lowered.`,
                 )
             }
@@ -178,8 +171,7 @@ export class Reactor {
 
     addLog(message: string) {
         this.logs.push(
-            `${new Date().toISOString()}: The following event occurred on ${
-                this.name
+            `${new Date().toISOString()}: The following event occurred on ${this.name
             } with ID ${this.id}: ${message}`,
         )
         this.logs = this.logs.slice(-100) // Limit each reactor to 100 logs ==> 400 logs per student
@@ -223,7 +215,7 @@ export class Reactor {
                 this.temperature.amount = this.convertToFahrenheit(
                     this.temperature.amount,
                 )
-                console.log("AFTER:", this.temperature.amount)
+                console.log('AFTER:', this.temperature.amount)
                 this.MAX_SAFE_TEMP = this.convertToFahrenheit(
                     this.MAX_SAFE_TEMP,
                 )
@@ -307,9 +299,11 @@ export class Reactor {
     }
 
     setCoolantState(state: 'on' | 'off') {
-        if (this.coolant !== state) {
+        if (this.coolant !== state && this.state !== State.OFFLINE && this.state !== State.EMERGENCY_SHUTDOWN && this.state !== State.MAINTENANCE) {
             this.addLog(`Coolant state changed to ${state}.`)
             this.coolant = state
+        } else {
+            return "You cannot change the coolant on a reactor that is offline, in maintenance mode, or underwent an emergency shutdown."
         }
     }
 }

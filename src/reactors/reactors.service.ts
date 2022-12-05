@@ -235,7 +235,11 @@ export class ReactorsService {
             ?.enableMaintenanceMode()
     }
 
-    setCoolantState(key: string, id: string, state: 'on' | 'off') {
+    setCoolantState(
+        key: string,
+        id: string,
+        state: 'on' | 'off',
+    ): string | void {
         this.addIfVoid(key)
         this.userNuclearPlants
             .get(key)

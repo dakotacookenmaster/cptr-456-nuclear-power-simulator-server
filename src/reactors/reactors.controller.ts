@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
     Controller,
     Get,
@@ -37,7 +38,7 @@ import { ReactorsService } from './reactors.service'
 @ApiBearerAuth()
 @Controller('reactors')
 export class ReactorsController {
-    constructor(private readonly reactorsService: ReactorsService) {}
+    constructor(private readonly reactorsService: ReactorsService) { }
 
     @ApiOperation({
         summary:
@@ -160,7 +161,8 @@ export class ReactorsController {
     })
     @ApiOkResponse({
         type: LogsDto,
-        description: 'This is returned when the request was successful. It is important to note here that dynamic_id refers to a real reactor id.',
+        description:
+            'This is returned when the request was successful. It is important to note here that dynamic_id refers to a real reactor id.',
     })
     @Get('logs')
     getLogs(@Req() request: any) {
@@ -454,7 +456,15 @@ export class ReactorsController {
         @Param('id') id: string,
         @Body() body: UpdateReactorCoolant,
     ) {
-        this.reactorsService.setCoolantState(request.user.key, id, body.coolant)
+        const returnedError = this.reactorsService.setCoolantState(
+            request.user.key,
+            id,
+            body.coolant,
+        )
+
+        if (returnedError) {
+            throw new BadRequestException(returnedError)
+        }
     }
 
     @ApiOperation({
