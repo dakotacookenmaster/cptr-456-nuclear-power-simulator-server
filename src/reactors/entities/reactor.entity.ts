@@ -116,13 +116,13 @@ export class Reactor {
         if (this.temperature.amount <= this.MAX_SAFE_TEMP && this.temperature.status !== TempLevel.SAFE) {
             this.temperature.status = TempLevel.SAFE
             this.addLog('Reactor returned to safe temperature levels.')
-        } else if (this.temperature.amount <= this.CAUTION_TEMP && this.temperature.status !== TempLevel.CAUTION) {
+        } else if (this.temperature.amount > this.MAX_SAFE_TEMP && this.temperature.amount <= this.CAUTION_TEMP && this.temperature.status !== TempLevel.CAUTION) {
             this.temperature.status = TempLevel.CAUTION
             this.addLog('Reactor exceeding safe temperature level - caution is advised.')
-        } else if (this.temperature.amount <= this.DANGER_TEMP && this.temperature.status !== TempLevel.DANGER) {
+        } else if (this.temperature.amount > this.CAUTION_TEMP && this.temperature.amount <= this.DANGER_TEMP && this.temperature.status !== TempLevel.DANGER) {
             this.temperature.status = TempLevel.DANGER
             this.addLog('Reactor critically exceeding safe temperature level - danger.')
-        } else if (this.temperature.amount <= this.MELTDOWN_TEMP + 50 && this.temperature.status !== TempLevel.MELTDOWN) {
+        } else if (this.temperature.amount > this.DANGER_TEMP && this.temperature.amount <= this.MELTDOWN_TEMP + 50 && this.temperature.status !== TempLevel.MELTDOWN) {
             this.temperature.status = TempLevel.MELTDOWN
             this.addLog('Reactor has begun meltdown process. Recommending controlled shutdown or emergency shutdown immediately.')
         } else {
