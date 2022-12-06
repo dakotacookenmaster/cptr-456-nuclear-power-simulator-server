@@ -200,7 +200,7 @@ export class ReactorsService {
 
     emergencyShutdown(key: string, id: string): string | void {
         this.addIfVoid(key)
-        this.userNuclearPlants
+        return this.userNuclearPlants
             .get(key)
             ?.reactors.find((item) => item.id === id)
             ?.emergencyShutdown()
@@ -208,7 +208,7 @@ export class ReactorsService {
 
     controlledShutdown(key: string, id: string): string | void {
         this.addIfVoid(key)
-        this.userNuclearPlants
+        return this.userNuclearPlants
             .get(key)
             ?.reactors.find((item) => item.id === id)
             ?.controlledShutdown()
@@ -229,7 +229,7 @@ export class ReactorsService {
 
     enableMaintenanceMode(key: string, id: string): string | void {
         this.addIfVoid(key)
-        this.userNuclearPlants
+        return this.userNuclearPlants
             .get(key)
             ?.reactors.find((item) => item.id === id)
             ?.enableMaintenanceMode()
@@ -241,7 +241,7 @@ export class ReactorsService {
         state: 'on' | 'off',
     ): string | void {
         this.addIfVoid(key)
-        this.userNuclearPlants
+        return this.userNuclearPlants
             .get(key)
             ?.reactors.find((item) => item.id === id)
             ?.setCoolantState(state)
