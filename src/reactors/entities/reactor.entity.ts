@@ -310,6 +310,8 @@ export class Reactor {
         if (this.coolant !== state && this.state !== State.OFFLINE && this.state !== State.EMERGENCY_SHUTDOWN && this.state !== State.MAINTENANCE) {
             this.addLog(`Coolant state changed to ${state}.`)
             this.coolant = state
+        } else if (state === this.coolant) {
+            return `The coolant is already ${this.coolant}.`
         } else {
             return "You cannot change the coolant on a reactor that is offline, in maintenance mode, or underwent an emergency shutdown."
         }
