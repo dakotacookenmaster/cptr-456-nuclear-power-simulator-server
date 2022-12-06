@@ -279,7 +279,11 @@ export class ReactorsController {
     })
     @Post('drop-rod/:id')
     dropControlRod(@Req() request: any, @Param('id') id: string) {
-        this.reactorsService.dropControlRod(request.user.key, id)
+        const returnedError = this.reactorsService.dropControlRod(request.user.key, id)
+
+        if (returnedError) {
+            throw new BadRequestException(returnedError)
+        }
     }
 
     @ApiOperation({
@@ -301,7 +305,11 @@ export class ReactorsController {
     })
     @Post('raise-rod/:id')
     raiseControlRod(@Req() request: any, @Param('id') id: string) {
-        this.reactorsService.raiseControlRod(request.user.key, id)
+        const returnedError = this.reactorsService.raiseControlRod(request.user.key, id)
+
+        if (returnedError) {
+            throw new BadRequestException(returnedError)
+        }
     }
 
     @ApiOperation({
@@ -323,7 +331,11 @@ export class ReactorsController {
     })
     @Post('emergency-shutdown/:id')
     emergencyShutdown(@Req() request: any, @Param('id') id: string) {
-        this.reactorsService.emergencyShutdown(request.user.key, id)
+        const returnedError = this.reactorsService.emergencyShutdown(request.user.key, id)
+
+        if (returnedError) {
+            throw new BadRequestException(returnedError)
+        }
     }
 
     @ApiOperation({
@@ -345,7 +357,11 @@ export class ReactorsController {
     })
     @Post('controlled-shutdown/:id')
     controlledShutdown(@Req() request: any, @Param('id') id: string) {
-        this.reactorsService.controlledShutdown(request.user.key, id)
+        const returnedResult = this.reactorsService.controlledShutdown(request.user.key, id)
+
+        if (returnedResult) {
+            throw new BadRequestException(returnedResult)
+        }
     }
 
     @ApiOperation({
@@ -367,7 +383,11 @@ export class ReactorsController {
     })
     @Post('maintenance/:id')
     enableMainteanceMode(@Req() request: any, @Param('id') id: string) {
-        this.reactorsService.enableMaintenanceMode(request.user.key, id)
+        const returnedResult = this.reactorsService.enableMaintenanceMode(request.user.key, id)
+
+        if (returnedResult) {
+            throw new BadRequestException(returnedResult)
+        }
     }
 
     @ApiOperation({

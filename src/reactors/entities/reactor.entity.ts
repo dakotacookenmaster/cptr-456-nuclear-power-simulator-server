@@ -75,6 +75,7 @@ export class Reactor {
         } else if (this.state === State.EMERGENCY_SHUTDOWN) {
             if (this.control_rods.in !== 300) {
                 this.dropControlRods(35)
+                this.temperature.amount = 22.22222 + this.control_rods.out * 2.45168
             }
 
             if (this.coolant !== 'on') {
@@ -126,7 +127,7 @@ export class Reactor {
             this.temperature.status = TempLevel.MELTDOWN
             this.addLog('Reactor has begun meltdown process. Recommending controlled shutdown or emergency shutdown immediately.')
         } else {
-            if (this.temperature.amount > this.MELTDOWN_TEMP + 50 && this.temperature.status !== TempLevel.MELTDOWN) {
+            if (this.temperature.amount > this.MELTDOWN_TEMP + 50 && this.state !== State.EMERGENCY_SHUTDOWN) {
                 this.temperature.status = TempLevel.MELTDOWN
                 this.state = State.EMERGENCY_SHUTDOWN
                 this.addLog('Emergency shutdown mode automatically activated!')
@@ -141,11 +142,8 @@ export class Reactor {
         if (this.control_rods.in - amount >= 0) {
             this.control_rods.in -= amount
             this.control_rods.out += amount
-
-            this.addLog(
-                `${amount} control rods were raised. ${(this.control_rods.in / 300) * 100
-                }% of the control rods are now lowered.`,
-            )
+        } else {
+            return "You cannot raise any more rods."
         }
     }
 
@@ -153,19 +151,11 @@ export class Reactor {
         if (this.control_rods.in + amount <= 300) {
             this.control_rods.in += amount
             this.control_rods.out -= amount
-            this.addLog(
-                `${amount} control rods were lowered. ${(this.control_rods.in / 300) * 100
-                }% of the control rods are now lowered.`,
-            )
-        } else {
-            if (this.control_rods.in !== 300) {
-                this.addLog(
-                    `${300 - this.control_rods.in
-                    } control rods were lowered. 100% of the control rods are now lowered.`,
-                )
-            }
+        } else if (this.control_rods.in < 300) {
             this.control_rods.in = 300
             this.control_rods.out = 0
+        } else {
+            return "You cannot drop any more control rods."
         }
     }
 
@@ -267,15 +257,28 @@ export class Reactor {
     }
 
     controlledShutdown() {
-        this.state = State.OFFLINE
+        if (this.state !== State.EMERGENCY_SHUTDOWN) {
+            this.state = State.OFFLINE
+        } else {
+            return "You cannot initiate a controlled shutdown on a reactor that underwent an emergency shutdown."
+        }
     }
 
     enableMaintenanceMode() {
-        this.state = State.MAINTENANCE
+        if (this.state !== State.EMERGENCY_SHUTDOWN) {
+            this.state = State.MAINTENANCE
+        } else {
+            return "You cannot enter maintenance mode on a reactor that underwent an emergency shutdown."
+        }
     }
 
     emergencyShutdown() {
-        this.state = State.EMERGENCY_SHUTDOWN
+        if (this.state !== State.EMERGENCY_SHUTDOWN) {
+            this.state = State.EMERGENCY_SHUTDOWN
+            this.addLog("Emergency shutdown mode manually activated!")
+        } else {
+            return "This reactor already underwent an emergency shutdown. Manual initiation is disallowed."
+        }
     }
 
     startReactor() {
@@ -288,7 +291,6 @@ export class Reactor {
         } else {
             this.addLog('Reactor (re)started.')
             this.state = State.ACTIVE
-            return false
         }
     }
 

@@ -198,7 +198,7 @@ export class ReactorsService {
             ?.startReactor()
     }
 
-    emergencyShutdown(key: string, id: string) {
+    emergencyShutdown(key: string, id: string): string | void {
         this.addIfVoid(key)
         this.userNuclearPlants
             .get(key)
@@ -206,7 +206,7 @@ export class ReactorsService {
             ?.emergencyShutdown()
     }
 
-    controlledShutdown(key: string, id: string) {
+    controlledShutdown(key: string, id: string): string | void {
         this.addIfVoid(key)
         this.userNuclearPlants
             .get(key)
@@ -227,7 +227,7 @@ export class ReactorsService {
         this.addIfVoid(key)
     }
 
-    enableMaintenanceMode(key: string, id: string) {
+    enableMaintenanceMode(key: string, id: string): string | void {
         this.addIfVoid(key)
         this.userNuclearPlants
             .get(key)
